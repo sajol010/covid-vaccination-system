@@ -6,7 +6,7 @@
         <form @submit.prevent="checkStatus" class="mt-4">
             <div class="mb-3">
                 <label for="nidStatus" class="form-label">Enter National ID Number</label>
-                <input type="text" class="form-control" id="nidStatus" v-model="nidStatus" required>
+                <input type="text" class="form-control" id="nidStatus" v-model="nid" required>
             </div>
             <button type="submit" class="btn btn-secondary">Check Status</button>
         </form>
@@ -17,23 +17,27 @@
 </template>
 
 <script>
+import UserService from '../services/VaccineService';
 export default {
     name: 'Status',
     data() {
         return {
-            nidStatus: '',
+            nid: '',
             statusResult: null,
         };
     },
     methods: {
-        checkStatus() {
-            // Implement status check logic here
-            // For demonstration, you can simulate results
-            if (this.nidStatus === '123456789') {
-                this.statusResult = 'Scheduled for vaccination on 2023-10-15.';
-            } else {
-                this.statusResult = 'Not registered.';
-            }
+        async checkStatus() {
+            const $this = this;
+            let currentStatus = await UserService.getStatus(this.nid).then(function (data){
+                if(data.success){
+                    $this.statusResult = data.data.status;
+                }
+            })
+
+           if (currentStatus){
+               console.log(currentStatus)
+           }
         },
     },
 };
