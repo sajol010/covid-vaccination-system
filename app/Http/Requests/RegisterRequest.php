@@ -27,9 +27,9 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'nullable|email|unique:users,email|max:255',
-            'phone' => 'nullable|string|unique:users,phone|max:15',
-            'nid' => 'required|string|unique:users,nid|max:20'
+            'email' => 'nullable|email|unique:registrants,email|max:255',
+            'phone' => 'nullable|string|unique:registrants,phone|max:15',
+            'nid' => 'required|string|unique:registrants,nid|max:20'
         ];
     }
 }

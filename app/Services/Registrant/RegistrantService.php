@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Services\Users;
+namespace App\Services\Registrant;
 
-use App\Models\User;
+use App\Models\Registrant;
 
-class UserService
+class RegistrantService
 {
     /**
      * @throws \Exception
      */
-    public function create(array $data): ?User
+    public function create(array $data): ?Registrant
     {
 
         if (empty($data['nid']))
@@ -18,16 +18,15 @@ class UserService
         if (empty($data['phone']))
             return throw new \Exception("Phone number can not be empty");
 
-
-        $user = User::create($data);
+        $user = Registrant::create($data);
         if (!$user)
             throw new \Exception("User not created");
 
         return $user;
     }
 
-    public function getByNID(string $nid): ?User
+    public function getByNID(string $nid): ?Registrant
     {
-        return User::where('nid', $nid)->first();
+        return Registrant::where('nid', $nid)->first();
     }
 }

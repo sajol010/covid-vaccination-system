@@ -21,8 +21,6 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'phone',
-        'nid',
         'password',
     ];
 
@@ -49,8 +47,5 @@ class User extends Authenticatable
         ];
     }
 
-    public function appointment(): HasOne
-    {
-        return $this->hasOne(Appointment::class);
-    }
+
 }

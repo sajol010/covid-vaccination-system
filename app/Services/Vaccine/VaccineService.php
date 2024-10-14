@@ -3,17 +3,18 @@
 namespace App\Services\Vaccine;
 
 use App\Models\Appointment;
+use App\Models\Registrant;
 use App\Models\User;
 use App\Models\VaccineCenter;
-use App\Services\Users\UserService;
+use App\Services\Registrant\RegistrantService;
 use Carbon\Carbon;
 
 class VaccineService implements VaccineServiceInterface
 {
-    protected UserService $userService;
+    protected RegistrantService $userService;
     const WEEK_DAY = [1,2,3,4,7]; // as per php date function monday=1, tuesday=2 and so on.
     const WEEKEND = [5,6];
-    public function __construct(UserService $userService)
+    public function __construct(RegistrantService $userService)
     {
         $this->userService = $userService;
     }
@@ -21,7 +22,7 @@ class VaccineService implements VaccineServiceInterface
     /**
      * @throws \Exception
      */
-    public function registerUser($userId, $vaccineCenterId)
+    public function registerUser($registrantId, $vaccineCenterId)
     {
         // Distribute users to vaccine centers based on capacity
         $vaccineCenter = VaccineCenter::find($vaccineCenterId);
@@ -30,7 +31,7 @@ class VaccineService implements VaccineServiceInterface
         $scheduledDate = $this->getNextAvailableWeekday($scheduledDate, $vaccineCenter);
 
         $apointment = Appointment::create([
-            'user_id' => $userId,
+            'registrant_id' => $registrantId,
             'vaccine_center_id' => $vaccineCenter->id,
             'scheduled_date' => $scheduledDate,
         ]);
@@ -45,7 +46,7 @@ class VaccineService implements VaccineServiceInterface
 
     public function getUserStatus($nid)
     {
-        $user = User::where('nid', $nid)->with(['appointment'])->first();
+        $user = Registrant::where('nid', $nid)->with(['appointment', 'appointment.'])->first();
 
         if (!$user) {
             return "Not Registered";

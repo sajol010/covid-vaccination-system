@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('registrant_id')->constrained()->onDelete('cascade');
             $table->foreignId('vaccine_center_id')->constrained()->onDelete('cascade');
             $table->date('scheduled_date');
             $table->integer('status')->default(0)->comment('0-Pending, 1-Approved, 2-Cancelled');

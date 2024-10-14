@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
-use App\Services\Users\UserService;
+use App\Services\Registrant\RegistrantService;
 use App\Services\Vaccine\VaccineService;
 use App\Traits\ApiResponse;
 use Illuminate\Support\Facades\DB;
@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\DB;
 class VaccineController extends Controller
 {
 
-    private $vaccineService, $userService;
-    public function __construct(VaccineService $vaccineService, UserService $userService)
+    private $vaccineService, $registrantService;
+    public function __construct(VaccineService $vaccineService, RegistrantService $registrantService)
     {
         $this->vaccineService = $vaccineService;
-        $this->userService = $userService;
+        $this->registrantService = $registrantService;
     }
 
     use ApiResponse;
@@ -24,10 +24,10 @@ class VaccineController extends Controller
     {
         DB::beginTransaction();
         try {
-            $user = $this->userService->create($request->all());
-            $this->vaccineService->registerUser($user['id'], $request['vaccine_center_id']);
+            $registrant = $this->registrantService->create($request->all());
+            $this->vaccineService->registerUser($registrant['id'], $request['vaccine_center_id']);
             DB::commit();
-            return $this->success("You have successfully registered to the vaccine center");
+            return $this->success([], 201, 'Vaccine registered successfully.');
         }catch (\Exception $exception){
             DB::rollBack();
             return $this->error($exception->getMessage());
