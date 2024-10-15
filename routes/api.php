@@ -14,4 +14,6 @@ Route::get('/vaccine-centers', [VaccineCenterController::class, 'index']);
 
 Route::group(['prefix' => 'registrants'], function () {
     Route::get('', [RegistrantController::class, 'index']);
+    Route::put('/{id}/mark-as-vaccinated', [RegistrantController::class, 'markAsVaccinated']);
+
 });

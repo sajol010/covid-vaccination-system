@@ -18,7 +18,7 @@
             <td>{{ registrant?.appointment?.vaccine_center?.name }}</td>
             <td>{{ registrant?.appointment?.scheduled_date }}</td>
             <td>{{ registrant?.appointment?.status_str }}</td>
-            <td><button  v-on:click="markAsVaccinated(registrant.id)">Mark as vaccinated</button></td>
+            <td><button :disabled="registrant?.appointment?.status === 1" v-on:click="markAsVaccinated(registrant.id)">Mark as vaccinated</button></td>
         </tr>
         </tbody>
     </table>
@@ -58,8 +58,10 @@ export default {
             this.page = page;
             this.fetch();
         },
-        markAsVaccinated(){
-
+        markAsVaccinated(id){
+            RegistrantsService.markAsVaccinated(id).then((data)=> {
+                this.fetch()
+            });
         }
     }
 

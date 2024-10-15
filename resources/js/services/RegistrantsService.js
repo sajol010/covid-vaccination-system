@@ -11,6 +11,15 @@ class RegistrantService {
             throw error;
         }
     }
+
+    async markAsVaccinated(id){
+        try {
+            const response = await axios.put(`/registrants/${id}/mark-as-vaccinated`, {} );
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default new RegistrantService();

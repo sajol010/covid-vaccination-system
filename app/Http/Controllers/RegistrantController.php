@@ -24,4 +24,14 @@ class RegistrantController extends Controller
         ];
         return $this->success($responseData);
     }
+
+    public function markAsVaccinated(Request $request, $id)
+    {
+        $registant = Registrant::find($id);
+        $registant->vaccinated = true;
+        if($registant->save()){
+            $registant->appointment()->update(['status' => 1]);
+            return $this->success($registant, 201, 'Registrant marked as vaccinated');
+        }
+    }
 }
