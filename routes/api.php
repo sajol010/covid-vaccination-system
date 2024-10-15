@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\VaccineCenterController;
-use App\Http\Controllers\VaccineController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\{RegistrantController, VaccineCenterController, VaccineController};
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,3 +11,7 @@ Route::group(['prefix' => 'vaccines'], function () {
 });
 
 Route::get('/vaccine-centers', [VaccineCenterController::class, 'index']);
+
+Route::group(['prefix' => 'registrants'], function () {
+    Route::get('', [RegistrantController::class, 'index']);
+});

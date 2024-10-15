@@ -11,7 +11,7 @@ class Appointment extends Model
 
     protected $fillable = ['registrant_id', 'vaccine_center_id', 'scheduled_date'];
 
-    public function vaccineCenter()
+    public function vaccine_center()
     {
         return $this->belongsTo(VaccineCenter::class);
     }
@@ -19,6 +19,25 @@ class Appointment extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        return $this->bindStatus($this->status);
+    }
+
+    public function bindStatus($status)
+    {
+        switch ($status) {
+            case 0:
+                return 'scheduled';
+            case 1:
+                return 'vaccinated';
+            case 2:
+                return 'cancelled';
+            default:
+                return '';
+        }
     }
 
 }

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import UserService from '../services/VaccineService';
+import VaccineService from '../services/VaccineService';
 export default {
     name: 'Status',
     data() {
@@ -29,7 +29,7 @@ export default {
     methods: {
         async checkStatus() {
             const $this = this;
-            let currentStatus = await UserService.getStatus(this.nid).then(function (data){
+            let currentStatus = await VaccineService.getStatus(this.nid).then(function (data){
                 if(data.success){
                     $this.statusResult = data.data.status;
                 }

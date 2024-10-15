@@ -2,11 +2,13 @@
     <div>
         <div class="text-center">
             <h1>Welcome to the COVID Vaccination System</h1>
-            <p>Register for vaccination or check your vaccination status.</p>
-            <router-link to="/register" class="btn btn-primary me-3">Register for Vaccination</router-link>
-            <router-link to="/status" class="btn btn-secondary">Check Status</router-link>
+            <span v-if="!isAdminPage">
+                <p>Register for vaccination or check your vaccination status.</p>
+                <router-link to="/register" class="btn btn-primary me-3">Register for Vaccination</router-link>
+                <router-link to="/status" class="btn btn-secondary">Check Status</router-link>
+            </span>
         </div>
-        
+
 
         <!-- Main Content Area -->
         <main>
@@ -22,7 +24,13 @@
 
 <script>
 export default {
-    name: 'Layout'
+    name: 'Layout',
+    computed: {
+        isAdminPage() {
+            // Check if the current route path starts with '/admin'
+            return this.$route.path.startsWith('/admin');
+        }
+    }
 };
 </script>
 

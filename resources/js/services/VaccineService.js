@@ -2,7 +2,7 @@
 
 import axios from '../axios'; // Import your Axios instance
 
-class UserService {
+class VaccineService {
     async fetchVaccineCenters() {
         try {
             const response = await axios.get('/vaccine-centers');
@@ -31,4 +31,4 @@ class UserService {
     }
 }
 
-export default new UserService();
+export default new VaccineService();

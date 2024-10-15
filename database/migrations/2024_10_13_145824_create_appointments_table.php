@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('registrant_id')->constrained()->onDelete('cascade');
             $table->foreignId('vaccine_center_id')->constrained()->onDelete('cascade');
             $table->date('scheduled_date');
-            $table->integer('status')->default(0)->comment('0-Pending, 1-Approved, 2-Cancelled');
+            $table->integer('status')->default(0)->comment('0-Pending, 1-vaccinated, 2-Cancelled');
             $table->timestamps();
         });
     }

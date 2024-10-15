@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import UserService from '../services/VaccineService';
+import VaccineService from '../services/VaccineService';
 
 export default {
     name: 'Register',
@@ -64,7 +64,7 @@ export default {
     },
     methods: {
         async getVaccinationCenter(){
-            await UserService.fetchVaccineCenters().then(data => {
+            await VaccineService.fetchVaccineCenters().then(data => {
                 let vaccinationCenters = data.data;
 
                 this.vaccinationCenters = vaccinationCenters.map(center => {
@@ -78,7 +78,7 @@ export default {
         async register() {
             this.error_msg = '';
             this.success_msg = '';
-            await UserService.registerUser(this.form_data).then(data => {
+            await VaccineService.registerUser(this.form_data).then(data => {
                 if (data.success){
                     this.success_msg = data.message;
                     this.form_data.name = '';
